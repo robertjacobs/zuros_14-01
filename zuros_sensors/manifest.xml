@@ -1,0 +1,17 @@
+<package>
+  <description brief="zuros_sensors">
+
+     zuros_sensors
+
+  </description>
+  <author>robot</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/zuros_sensors</url>
+  <depend package="std_msgs"/>
+  <depend package="rospy"/>
+  <depend package="roscpp"/>
+
+</package>
+
+

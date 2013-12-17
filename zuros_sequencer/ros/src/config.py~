@@ -1,0 +1,4 @@
+zwave_config = {
+  # The settings for the channel logging MySQL server / database / table
+  'message_name': 'ZWAVE'
+}
