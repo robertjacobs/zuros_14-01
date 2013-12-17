@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ## @package sensors.py
 # This module handles the polling of sensors. It is built in a way that multiple sensor networks can be used, but this time the only network used is zwave.
 #
@@ -82,7 +83,7 @@ class FibaroZWaveHomeController(PollingProcessor):
 			communication_id = "ZWAVE:" + str(device['id'])
 			
 			try:
-				#the fibaro home controller has 3 "devices", which are no real devices, called admin, weather and zwave. Need to filter those
+				#The fibaro home controller has 3 "devices", which are no real devices, called admin, weather and zwave. Need to filter those
 				if(str(device['name']) != str("admin") and str(device['name']) != str("weather") and str(device['name']) != str("zwave")):
 					sensor = next(s for s in self._sensorsAdded if str(s['id']) == str(communication_id))	
 
@@ -109,7 +110,7 @@ class FibaroZWaveHomeController(PollingProcessor):
 			self._sensor_publisher.publish(MSG_ZWAVE_STATUS(name=sensor['name'],value=sensor['properties']['value'],communication_id=sensor['id']))		
 
 if __name__ == '__main__':
-	import config
+	import sensors_config
 	
 	#Array which holds the different sensors
 	sensorList = []

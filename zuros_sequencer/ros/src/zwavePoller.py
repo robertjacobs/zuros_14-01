@@ -1,39 +1,78 @@
 #!/usr/bin/env python
+
+## @package zwavePoller.py
+# This module handles writing the sensor information coming from zuros_sensors
+#
+# Robert Jacobs 2013
+
 import sys
 from socket import AF_INET, SOCK_DGRAM, socket, timeout
 import json, urllib2, base64
 import time
 
+#Database connection
+from include.database import SensorsInDatabase
+
 #ROS stuff
 import rospy
 import roslib
 roslib.load_manifest('zuros_sensors')
-from zuros_sensors.msg import Zwave
+from zuros_sensors.msg import MSG_ZWAVE_SENSORS, MSG_ZWAVE_STATUS
 
-#polling processor made by UH
-#https://github.com/uh-adapsys/UHCore/blob/master/Core/extensions.py
-from include.extensions import PollingProcessor
-                
-from include.database import SensorsInDatabase
-
-class SensorHandler(self):
-	def __init__(self):
+## Handles the message gathering and writing to the 
+#
+#
+class MessageHandler(object):
+	## Init function that also gathers sensors and sensorTypes from database
+	#	
+	def __init__(self):		
 		#get the sensor definitions from the database
 		self._sensors = SensorsInDatabase().GetAllSensors()
 		#get the sensorTypes definitions from the database
 		self._sensorTypes = SensorsInDatabase().GetAllSensorTypes()
 	
-	def Callback(data):
-		sensor = None
-		sensor['value'] = data.value
-		sensor['communication_id'] = data.communication_id
-		sensor['name'] = data.name
+	## Callback method for the status topic (ZWAVE_STATUS)
+	#
+	def CallbackStatus(self, data):
+		sensor = next(s for s in self._sensors if str(s['communication_id']) == str(data.communication_id))
+		
+		for type in self._sensorTypes:
+			#We will need to check which sensorType our sensor has in order to interpret the value
+			if(str(sensor['sensorType']) == str(type['id'])):
+				#Add the uninterpreted value into the value field
+				sensor['value'] = data.value
+				#Set the last_interpreted value to the current one
+				sensor['last_interpreted_value'] = sensor['interpreted_value']
+				#set the last updated datetime
+				sensor['lastUpdated'] = time.strftime('%Y-%m-%d %H:%M:%S')
+		            
+				#check if we have an analog sensor or not
+				if(type['onValue'] != None and type['offValue'] != None):
+					if(str(data.value) == "0"):
+						#interpreted value - set to value set in database
+						sensor['interpreted_value'] = type['offValue']
+		                                                                    
+					elif (str(data.value) == "1"):
+						##interpreted value - set to value set in database
+						sensor['interpreted_value'] = type['onValue']
+				#we had an analog sensor, so we will write the raw value into the value
+				else:
+					sensor['interpreted_value'] = data.value
+        
+		#Write the new sensor information to the database                                                
+		SensorsInDatabase().UpdateSensorValue(sensor)
+		rospy.loginfo(rospy.get_name() + ": Sensor status update (%s): %s" % (sensor['name'], sensor['interpreted_value']))
+
+	## Callback method for the sensors topic (ZWAVE_SENSORS)
+	#
+	#def CallbackSensors(self, data):
 	
 if __name__ == '__main__':
-	import config
+	import zwavePoller_config
+	handler = MessageHandler()
 	
-	handler = SensorHandler()
-	
+	#ROS node
 	rospy.init_node('zwavePoller', anonymous=False)
-	rospy.Subscriber(config.message_name, Zwave, handler.Callback)
+	rospy.Subscriber(zwavePoller_config.message_config['message_status'], MSG_ZWAVE_STATUS, handler.CallbackStatus)
+	#rospy.Subscriber(zwavePoller_config.message_config['message_sensors'], MSG_ZWAVE_SENSORS, handler.CallbackSensors)
 	rospy.spin()

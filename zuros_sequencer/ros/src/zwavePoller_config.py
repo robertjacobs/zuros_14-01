@@ -5,10 +5,10 @@ server_config = {
   'mysql_password'               : 'zuydrobotics',
   'mysql_db'                     : 'Zuros',
   'mysql_sensor_table_name'      : 'Sensor',
-  'mysql_sensor_types_table_name': 'SensorType',
+  'mysql_sensor_types_table_name': 'SensorType'
 }
 
 message_config = {
   'message_status'               : 'ZWAVE_STATUS',
-  'message_sensors'              : 'ZWAVE_SENSORS',
+  'message_sensors'              : 'ZWAVE_SENSORS'
 }
