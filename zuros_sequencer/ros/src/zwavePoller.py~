@@ -30,43 +30,59 @@ class MessageHandler(object):
 		self._sensors = SensorsInDatabase().GetAllSensors()
 		#get the sensorTypes definitions from the database
 		self._sensorTypes = SensorsInDatabase().GetAllSensorTypes()
+
+		self._sensorsInTopic = []
 	
 	## Callback method for the status topic (ZWAVE_STATUS)
 	#
 	def CallbackStatus(self, data):
-		sensor = next(s for s in self._sensors if str(s['communication_id']) == str(data.communication_id))
+		try:
+			sensor = next(s for s in self._sensors if str(s['communication_id']) == str(data.communication_id))
 		
-		for type in self._sensorTypes:
-			#We will need to check which sensorType our sensor has in order to interpret the value
-			if(str(sensor['sensorType']) == str(type['id'])):
-				#Add the uninterpreted value into the value field
-				sensor['value'] = data.value
-				#Set the last_interpreted value to the current one
-				sensor['last_interpreted_value'] = sensor['interpreted_value']
-				#set the last updated datetime
-				sensor['lastUpdated'] = time.strftime('%Y-%m-%d %H:%M:%S')
-		            
-				#check if we have an analog sensor or not
-				if(type['onValue'] != None and type['offValue'] != None):
-					if(str(data.value) == "0"):
-						#interpreted value - set to value set in database
-						sensor['interpreted_value'] = type['offValue']
-		                                                                    
-					elif (str(data.value) == "1"):
-						##interpreted value - set to value set in database
-						sensor['interpreted_value'] = type['onValue']
-				#we had an analog sensor, so we will write the raw value into the value
-				else:
-					sensor['interpreted_value'] = data.value
-        
-		#Write the new sensor information to the database                                                
-		SensorsInDatabase().UpdateSensorValue(sensor)
-		rospy.loginfo(rospy.get_name() + ": Sensor status update (%s): %s" % (sensor['name'], sensor['interpreted_value']))
-
+			for type in self._sensorTypes:
+				#We will need to check which sensorType our sensor has in order to interpret the value
+				if(str(sensor['sensorType']) == str(type['id'])):
+					#Add the uninterpreted value into the value field
+					sensor['value'] = data.value
+					#Set the last_interpreted value to the current one
+					sensor['last_interpreted_value'] = sensor['interpreted_value']
+					#set the last updated datetime
+					sensor['lastUpdated'] = time.strftime('%Y-%m-%d %H:%M:%S')
+				        
+					#check if we have an analog sensor or not
+					if(type['onValue'] != None and type['offValue'] != None):
+						if(str(data.value) == "0"):
+							#interpreted value - set to value set in database
+							sensor['interpreted_value'] = type['offValue']
+				                                                                
+						elif (str(data.value) == "1"):
+							##interpreted value - set to value set in database
+							sensor['interpreted_value'] = type['onValue']
+					#we had an analog sensor, so we will write the raw value into the value
+					else:
+						sensor['interpreted_value'] = data.value
+		    
+			#Write the new sensor information to the database                                                
+			SensorsInDatabase().UpdateSensorValue(sensor)
+			rospy.loginfo(rospy.get_name() + ": Sensor status update (%s): %s" % (sensor['name'], sensor['interpreted_value']))
+		except StopIteration:
+			rospy.loginfo(rospy.get_name() + ": Sensor update for unknown sensor with name (%s) and id %s - please add it to the database" % (data.name, data.communication_id))
+	
 	## Callback method for the sensors topic (ZWAVE_SENSORS)
 	#
-	#def CallbackSensors(self, data):
-	
+	def CallbackSensors(self, data):
+		#use sensorsintopic for gathering sensors and if there is a new sensor, update _sensors from database
+		try:
+			sensor = next(s for s in self._sensorsInTopic if str(s['communication_id']) == str(data.communication_id))
+
+		except StopIteration:
+			sensor = []
+			sensor['name'] = data.name
+			sensor['communication_id'] = data.communication_id
+			sensor['value'] = data.value
+			self._sensorsInTopic.append(sensor)
+			self._sensors = SensorsInDatabase().GetAllSensors()
+
 if __name__ == '__main__':
 	import zwavePoller_config
 	handler = MessageHandler()
@@ -74,5 +90,5 @@ if __name__ == '__main__':
 	#ROS node
 	rospy.init_node('zwavePoller', anonymous=False)
 	rospy.Subscriber(zwavePoller_config.message_config['message_status'], MSG_ZWAVE_STATUS, handler.CallbackStatus)
-	#rospy.Subscriber(zwavePoller_config.message_config['message_sensors'], MSG_ZWAVE_SENSORS, handler.CallbackSensors)
+	rospy.Subscriber(zwavePoller_config.message_config['message_sensors'], MSG_ZWAVE_SENSORS, handler.CallbackSensors)
 	rospy.spin()
