@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 ## @package sensors.py
 # This module handles the polling of sensors. It is built in a way that multiple sensor networks can be used, but this time the only network used is zwave.
 #
@@ -45,7 +46,7 @@ class FibaroZWaveHomeController(PollingProcessor):
 	def start(self):
 		
 		rospy.init_node('zwave_publisher')
-		rospy.loginfo("Started polling zwave sensors")
+		rospy.loginfo(rospy.get_name() + " Started polling zwave sensors")
 				
 		self._addPollingProcessor('zwave', self.pollZWaveSensors, None, 0.1)
 
@@ -53,7 +54,7 @@ class FibaroZWaveHomeController(PollingProcessor):
 	#
 	# This function stops the polling processor
 	def stop(self):
-		rospy.loginfo("Stopped polling zwave sensors")
+		rospy.loginfo(rospy.get_name() + " Stopped polling zwave sensors")
 		self._removePollingProcessor('zwave')
 	
 	## Polling function
@@ -72,7 +73,7 @@ class FibaroZWaveHomeController(PollingProcessor):
 			data = json.load(result)
 		except Exception as e:
 			if id(self) + type(e) not in self._warned:
-				rospy.logerror("Error while receiving data from ZWaveHomeController: %s" % e)
+				rospy.logerror(rospy.get_name() + " Error while receiving data from ZWaveHomeController: %s" % e)
 				self._warned.append(id(self) + type(e))
 				return
 		
@@ -90,7 +91,7 @@ class FibaroZWaveHomeController(PollingProcessor):
 			except StopIteration:	
 				device['id'] = communication_id			
 				self._sensorsAdded.append(device)
-				rospy.loginfo("Added sensor with name %s" % device['name'])
+				rospy.loginfo(rospy.get_name() + " Added sensor with name %s" % device['name'])
 				continue	
 
 		#Checks the devices for changed values
@@ -103,25 +104,29 @@ class FibaroZWaveHomeController(PollingProcessor):
 					if(str(sensor['properties']['value']) != str(device['properties']['value'])):
 						sensor['properties']['value'] = device['properties']['value']
 						self._status_publisher.publish(MSG_ZWAVE_SENSORS(name=sensor['name'],value=sensor['properties']['value'],communication_id=sensor['id']))		
-						rospy.loginfo("value changed for device %s" % device['name'])
+						rospy.loginfo(rospy.get_name() + " Value changed for device %s" % device['name'])
 		
 		#Publishes every sensor to topic so that other node knows which sensors are available	
 		for sensor in self._sensorsAdded:		
 			self._sensor_publisher.publish(MSG_ZWAVE_STATUS(name=sensor['name'],value=sensor['properties']['value'],communication_id=sensor['id']))		
 
 if __name__ == '__main__':
-	import sensors_config
-	
+	try:
+		parameters = rospy.get_param("/zuros/zuros_sensors/config/")
+	except:
+		rospy.loginfo(rospy.get_name() + " Parameters not set. Please run the folllowing console command: rosrun zuros_sensors set_parameters.py")
+		sys.exit("Parameters not set. Please run the folllowing console command: rosrun zuros_sensors set_parameters.py")
+
 	#Array which holds the different sensors
 	sensorList = []
 	
 	#Find sensors in location named ZAP in config file
-	for sensorType in config.locations_config['ZAP']['sensors']:
-		sensor = None
-		
+	for key, sensorType in parameters['locations']['ZAP'].items():
+		sensor = None	
+
 		#Is there a sensor with the name "ZWaveHomeController"?
 		if sensorType == 'ZWaveHomeController':
-			sensor = FibaroZWaveHomeController(config.server_config['zwave_ip'])
+			sensor = FibaroZWaveHomeController(parameters['sensor_config']['zwave']['server_address'])
 	
 		#If we found a sensor, add it to the list
 		if sensor != None:

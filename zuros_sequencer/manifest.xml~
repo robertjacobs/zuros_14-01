@@ -14,7 +14,7 @@
   <depend package="zuros_sensors"/>
   <rosdep name="libmysqlclient-dev"/>
   <export>
-    <cpp lflags="-L/usr/lib/mysql -lmysqlclient"/>
+    <cpp lflags="-lmysqlclient"/>
   </export>
 </package>
 

@@ -69,10 +69,19 @@ class MessageHandler(object):
 			rospy.loginfo(rospy.get_name() + ": Sensor update for unknown sensor with name (%s) and id %s - please add it to the database" % (data.name, data.communication_id))
 
 if __name__ == '__main__':
-	import zwavePoller_config
 	handler = MessageHandler()
 	
+	try:
+		parameters = rospy.get_param("/zuros/zuros_sequencer/config/")
+	except:
+		rospy.loginfo(rospy.get_name() + " Parameters not set. Please run the folllowing console command: rosrun zuros_sequencer set_parameters.py")
+		sys.exit("Parameters not set. Please run the folllowing console command: rosrun zuros_sequencer set_parameters.py")
+
 	#ROS node
-	rospy.init_node('zwavePoller', anonymous=False)
-	rospy.Subscriber(zwavePoller_config.message_config['message_status'], MSG_ZWAVE_STATUS, handler.CallbackStatus)
+	rospy.init_node('zuros_sequencer_zwave_poller_py', anonymous=False)
+	rospy.Subscriber(parameters['message_config']['message_status'], MSG_ZWAVE_STATUS, handler.CallbackStatus)
+	
+	#Not used at this point. In the future this could be used to dynamically check if a new sensor was added during operation
+	#rospy.Subscriber(parameters['message_config']['message_sensors'], MSG_ZWAVE_SENSORS, handler.CallbackSensors)
+
 	rospy.spin()

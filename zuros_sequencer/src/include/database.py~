@@ -1,10 +1,19 @@
+import sys
 import MySQLdb
+
+#ROS stuff
+import rospy
 
 class SensorsInDatabase(object):
 	def __init__(self):
-		from zwavePoller_config import server_config
-		self._sensorTable = server_config['mysql_sensor_table_name']
-		self._sensorTypesTable = server_config['mysql_sensor_types_table_name']
+		try:
+			parameters = rospy.get_param("/zuros/zuros_sequencer/config/")
+		except:
+			rospy.loginfo(rospy.get_name() + " Parameters not set. Please run the folllowing console command: rosrun zuros_sensors set_parameters.py")
+			sys.exit("Parameters not set. Please run the folllowing console command: rosrun zuros_sensors set_parameters.py")
+	
+		self._sensorTable = parameters['database_config']['mysql_sensor_table_name']
+		self._sensorTypesTable = parameters['database_config']['mysql_sensor_types_table_name']
 		self._sql = Database()
 
 	def GetAllSensors(self):
@@ -20,11 +29,16 @@ class SensorsInDatabase(object):
 
 class Database(object):
 	def __init__(self, hostname=None, username=None, password=None, database=None):
-		from zwavePoller_config import server_config
-		self._host = hostname or server_config['mysql_server']
-		self._pass = password or server_config['mysql_password']
-		self._user = username or server_config['mysql_user']
-		self._db_url = database or server_config['mysql_db']
+		try:
+			parameters = rospy.get_param("/zuros/zuros_sequencer/config/")
+		except:
+			rospy.loginfo(rospy.get_name() + " Parameters not set. Please run the folllowing console command: rosrun zuros_sensors set_parameters.py")
+			sys.exit("Parameters not set. Please run the folllowing console command: rosrun zuros_sensors set_parameters.py")
+
+		self._host = hostname or parameters['database_config']['mysql_server']
+		self._pass = password or parameters['database_config']['mysql_password']
+		self._user = username or parameters['database_config']['mysql_user']
+		self._db_url = database or parameters['database_config']['mysql_db']
 		self._db = MySQLdb.connect(self._host, self._user, self._pass, self._db_url)
                 
 	def OpenConnection(self):
