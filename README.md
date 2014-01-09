@@ -8,6 +8,7 @@ To make this possible a physical meeting point bringing together robot developme
 More concrete, the research center Technology in care of ZUYD University of technology invested in a robot platform to be used in the context of care research and related education. Its purpose is to provide a basic platform onto which a variety of applications could be build. This platform is meant to function primarily at the lab situation located in the building of Zorg Acedemie Parkstad, Heerlen. The selected platform is a platform developed at the robotics center of the faculty of 3mE at TU Delft. It is the same platform used for the minor courses at TU Delft. 
 
 __Project is structured as follows:__ 
+
 __zuros_sensors:__ 
 Package for reading external sensors (environental sensors like zwave and robot sensors like asus xtion) and sending their information to other packages using ROS
 
