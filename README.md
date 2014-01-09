@@ -9,6 +9,9 @@ More concrete, the research center Technology in care of ZUYD University of tech
 
 Project is structured as follows:  
 __zuros_sensors:__ Package for reading external sensors (environental sensors like zwave and robot sensors like asus xtion) and sending their information to other packages using ROS
+
 __zuros_sequencer:__ Package which contains sequencing components (like driving around)
+
 __zuros_deliberator:__ Package which contains deliberation components (like navigation)
+
 __zuros_control:__ Package which contains control component (like motor driver)
