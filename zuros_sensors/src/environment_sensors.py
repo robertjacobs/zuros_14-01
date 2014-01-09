@@ -45,7 +45,7 @@ class FibaroZWaveHomeController(PollingProcessor):
 	# This function initializes the rospy node and starts the polling processor at a rate of 10Hz 
 	def start(self):
 		
-		rospy.init_node('zuros_sensors_sensors_py')
+		rospy.init_node('zuros_sensors_environment_sensors_py')
 		rospy.loginfo(rospy.get_name() + " Started polling zwave sensors")
 				
 		self._addPollingProcessor('zwave', self.pollZWaveSensors, None, 0.1)

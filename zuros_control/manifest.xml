@@ -4,10 +4,10 @@
      zuros_control
 
   </description>
-  <author>robot</author>
+  <author>Robert Jacobs</author>
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
-  <url>http://ros.org/wiki/zuros_control</url>
+  <url>http://zuros.technologyincare.nl/w/index.php?title=Zuros_control</url>
   <depend package="std_msgs"/>
   <depend package="rospy"/>
   <depend package="roscpp"/>

@@ -4,10 +4,10 @@
      zuros_sequencer
 
   </description>
-  <author>robot</author>
+  <author>Robert Jacobs</author>
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
-  <url>http://ros.org/wiki/zuros_sequencer</url>
+  <url>http://zuros.technologyincare.nl/w/index.php?title=Zuros_sequencer</url>
   <depend package="std_msgs"/>
   <depend package="rospy"/>
   <depend package="roscpp"/>

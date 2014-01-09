@@ -55,7 +55,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.environment</key>
-					<value>VERBOSE=1|ROS_ROOT=/opt/ros/hydro/share/ros|ROS_PACKAGE_PATH=/home/robot/git/zuros:/opt/ros/hydro/share:/opt/ros/hydro/stacks|PYTHONPATH=/opt/ros/hydro/lib/python2.7/dist-packages|PATH=/opt/ros/hydro/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games|LD_LIBRARY_PATH=/opt/ros/hydro/lib|PKG_CONFIG_PATH=/opt/ros/hydro/lib/pkgconfig|CMAKE_PREFIX_PATH=/opt/ros/hydro|</value>
+					<value>VERBOSE=1|ROS_ROOT=/opt/ros/hydro/share/ros|ROS_PACKAGE_PATH=/home/robot/git/test:/home/robot/git/node_example:/home/robot/git/zuros:/opt/ros/hydro/share:/opt/ros/hydro/stacks|PYTHONPATH=/opt/ros/hydro/lib/python2.7/dist-packages|PATH=/opt/ros/hydro/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games|LD_LIBRARY_PATH=/opt/ros/hydro/lib|PKG_CONFIG_PATH=/opt/ros/hydro/lib/pkgconfig|CMAKE_PREFIX_PATH=/opt/ros/hydro|</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.enableFullBuild</key>

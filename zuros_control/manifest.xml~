@@ -1,13 +1,13 @@
 <package>
-  <description brief="zuros_sensors">
+  <description brief="zuros_control">
 
-     zuros_sensors
+     zuros_control
 
   </description>
-  <author>Robert Jacobs</author>
+  <author>robot</author>
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
-  <url>http://zuros.technologyincare.nl/w/index.php?title=Zuros_sensors</url>
+  <url>http://ros.org/wiki/zuros_control</url>
   <depend package="std_msgs"/>
   <depend package="rospy"/>
   <depend package="roscpp"/>

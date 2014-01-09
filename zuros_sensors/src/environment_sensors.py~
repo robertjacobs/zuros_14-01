@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-## @package sensors.py
+## @package environmental_sensors.py
 # This module handles the polling of sensors. It is built in a way that multiple sensor networks can be used, but this time the only network used is zwave.
 #
 # Robert Jacobs 2013
