@@ -13,6 +13,6 @@ int main(int argc, char** argv)
 	serial_port->set_speed_int(921600);
 	motor->setSerialPort(serial_port);
 
-	motor->setConfig(config->setID(109));
+	motor->setConfig(config->setID(106));
 	motor->init(false);
 }

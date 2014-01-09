@@ -1,7 +1,7 @@
 //id: 0403:6001
 
-#include <threemxl/C3mxl.h>
-#include <threemxl/LxFTDI.h>
+#include <C3mxl.h>
+#include <LxFTDI.h>
 
 int main(int argc, char** argv)
 {
