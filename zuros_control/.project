@@ -55,7 +55,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.environment</key>
-					<value>VERBOSE=1|ROS_ROOT=/opt/ros/hydro/share/ros|ROS_PACKAGE_PATH=/home/robot/git/test:/home/robot/git/node_example:/home/robot/git/zuros:/opt/ros/hydro/share:/opt/ros/hydro/stacks|PYTHONPATH=/opt/ros/hydro/lib/python2.7/dist-packages|PATH=/opt/ros/hydro/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games|LD_LIBRARY_PATH=/opt/ros/hydro/lib|PKG_CONFIG_PATH=/opt/ros/hydro/lib/pkgconfig|CMAKE_PREFIX_PATH=/opt/ros/hydro|</value>
+					<value>VERBOSE=1|ROS_ROOT=/opt/ros/hydro/share/ros|ROS_PACKAGE_PATH=/home/robot/git/test:/home/robot/git/node_example:/home/robot/git/threemxl:/home/robot/git/zuros:/opt/ros/hydro/share:/opt/ros/hydro/stacks|PYTHONPATH=/opt/ros/hydro/lib/python2.7/dist-packages|PATH=/opt/ros/hydro/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games|LD_LIBRARY_PATH=/opt/ros/hydro/lib|PKG_CONFIG_PATH=/opt/ros/hydro/lib/pkgconfig|CMAKE_PREFIX_PATH=/opt/ros/hydro|</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.enableFullBuild</key>
@@ -120,6 +120,41 @@
 		</link>
 		<link>
 			<name>[Targets]</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] 3mxlController</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] 3mxlController/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] 3mxlController/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] 3mxlController/Source Files/3mxlController.cpp</name>
+			<type>1</type>
+			<location>/home/robot/git/zuros/zuros_control/src/3mxlController.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] 3mxlController/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] 3mxlController/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] 3mxlController/Resources</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
