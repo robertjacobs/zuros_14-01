@@ -8,10 +8,10 @@
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
   <url>http://zuros.technologyincare.nl/w/index.php?title=Zuros_deliberator</url>
-  <depend package="std_msgs"/>
+  <depend package="sensor_msgs"/>
   <depend package="rospy"/>
   <depend package="roscpp"/>
-
+  <depend package="zuros_control"/>
 </package>
 
 

@@ -27,14 +27,14 @@ int main(int argc, char **argv)
 
         // initialize the subscribers (for details see comments in class)
         controller.init();
-		controller.spin();
+		//controller.spin();
 
         /**
         * ros::spin() will enter a loop, pumping callbacks. With this version, all
         * callbacks will be called from within this thread (the main one). ros::spin()
         * will exit when Ctrl-C is pressed, or the node is shutdown by the master.
         */
-        //ros::spin();
+        ros::spin();
 
         return 0;
 }

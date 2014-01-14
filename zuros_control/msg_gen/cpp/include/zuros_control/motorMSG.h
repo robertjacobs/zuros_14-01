@@ -22,32 +22,32 @@ struct motorMSG_ {
   typedef motorMSG_<ContainerAllocator> Type;
 
   motorMSG_()
-  : id(0)
-  , mode()
-  , accel(0)
-  , speed(0)
+  : left_accel(0)
+  , left_speed(0)
+  , right_accel(0)
+  , right_speed(0)
   {
   }
 
   motorMSG_(const ContainerAllocator& _alloc)
-  : id(0)
-  , mode(_alloc)
-  , accel(0)
-  , speed(0)
+  : left_accel(0)
+  , left_speed(0)
+  , right_accel(0)
+  , right_speed(0)
   {
   }
 
-  typedef int32_t _id_type;
-  int32_t id;
+  typedef int32_t _left_accel_type;
+  int32_t left_accel;
 
-  typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _mode_type;
-  std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  mode;
+  typedef int32_t _left_speed_type;
+  int32_t left_speed;
 
-  typedef int32_t _accel_type;
-  int32_t accel;
+  typedef int32_t _right_accel_type;
+  int32_t right_accel;
 
-  typedef int32_t _speed_type;
-  int32_t speed;
+  typedef int32_t _right_speed_type;
+  int32_t right_speed;
 
 
   typedef boost::shared_ptr< ::zuros_control::motorMSG_<ContainerAllocator> > Ptr;
@@ -78,12 +78,12 @@ template<class ContainerAllocator>
 struct MD5Sum< ::zuros_control::motorMSG_<ContainerAllocator> > {
   static const char* value() 
   {
-    return "2b842696bf7d178aec69e2f08b9dd853";
+    return "a2a9eec3fd2b159cc6afa5290066e5df";
   }
 
   static const char* value(const  ::zuros_control::motorMSG_<ContainerAllocator> &) { return value(); } 
-  static const uint64_t static_value1 = 0x2b842696bf7d178aULL;
-  static const uint64_t static_value2 = 0xec69e2f08b9dd853ULL;
+  static const uint64_t static_value1 = 0xa2a9eec3fd2b159cULL;
+  static const uint64_t static_value2 = 0xc6afa5290066e5dfULL;
 };
 
 template<class ContainerAllocator>
@@ -100,10 +100,13 @@ template<class ContainerAllocator>
 struct Definition< ::zuros_control::motorMSG_<ContainerAllocator> > {
   static const char* value() 
   {
-    return "int32 id\n\
-string mode\n\
-int32 accel\n\
-int32 speed\n\
+    return "#left motor\n\
+int32 left_accel\n\
+int32 left_speed\n\
+\n\
+#right motor\n\
+int32 right_accel\n\
+int32 right_speed\n\
 \n\
 ";
   }
@@ -111,6 +114,7 @@ int32 speed\n\
   static const char* value(const  ::zuros_control::motorMSG_<ContainerAllocator> &) { return value(); } 
 };
 
+template<class ContainerAllocator> struct IsFixedSize< ::zuros_control::motorMSG_<ContainerAllocator> > : public TrueType {};
 } // namespace message_traits
 } // namespace ros
 
@@ -123,10 +127,10 @@ template<class ContainerAllocator> struct Serializer< ::zuros_control::motorMSG_
 {
   template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
   {
-    stream.next(m.id);
-    stream.next(m.mode);
-    stream.next(m.accel);
-    stream.next(m.speed);
+    stream.next(m.left_accel);
+    stream.next(m.left_speed);
+    stream.next(m.right_accel);
+    stream.next(m.right_speed);
   }
 
   ROS_DECLARE_ALLINONE_SERIALIZER;
@@ -144,14 +148,14 @@ struct Printer< ::zuros_control::motorMSG_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const  ::zuros_control::motorMSG_<ContainerAllocator> & v) 
   {
-    s << indent << "id: ";
-    Printer<int32_t>::stream(s, indent + "  ", v.id);
-    s << indent << "mode: ";
-    Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.mode);
-    s << indent << "accel: ";
-    Printer<int32_t>::stream(s, indent + "  ", v.accel);
-    s << indent << "speed: ";
-    Printer<int32_t>::stream(s, indent + "  ", v.speed);
+    s << indent << "left_accel: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.left_accel);
+    s << indent << "left_speed: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.left_speed);
+    s << indent << "right_accel: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.right_accel);
+    s << indent << "right_speed: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.right_speed);
   }
 };
 

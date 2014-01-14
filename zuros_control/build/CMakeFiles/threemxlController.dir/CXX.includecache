@@ -6,12 +6,36 @@
 
 #IncludeRegexTransform: 
 
+../msg_gen/cpp/include/zuros_control/motorMSG.h
+string
+-
+vector
+-
+map
+-
+ostream
+-
+ros/serialization.h
+../msg_gen/cpp/include/zuros_control/ros/serialization.h
+ros/builtin_message_traits.h
+../msg_gen/cpp/include/zuros_control/ros/builtin_message_traits.h
+ros/message_operations.h
+../msg_gen/cpp/include/zuros_control/ros/message_operations.h
+ros/time.h
+../msg_gen/cpp/include/zuros_control/ros/time.h
+ros/macros.h
+../msg_gen/cpp/include/zuros_control/ros/macros.h
+ros/assert.h
+../msg_gen/cpp/include/zuros_control/ros/assert.h
+
 ../src/include/zuros_threemxl/threemxlController.h
 ros/ros.h
 ../src/include/zuros_threemxl/ros/ros.h
 std_msgs/Int32.h
 -
 threemxl/C3mxlROS.h
+-
+zuros_control/motorMSG.h
 -
 
 /home/robot/git/zuros/zuros_control/src/threemxlController.cpp
@@ -21,6 +45,12 @@ sstream
 -
 threemxl/C3mxlROS.h
 -
+
+/home/robot/git/zuros/zuros_control/src/threemxlController_main.cpp
+ros/ros.h
+/home/robot/git/zuros/zuros_control/src/ros/ros.h
+zuros_threemxl/threemxlController.h
+/home/robot/git/zuros/zuros_control/src/zuros_threemxl/threemxlController.h
 
 /opt/ros/hydro/include/XmlRpcDecl.h
 ros/macros.h

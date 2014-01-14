@@ -11,20 +11,21 @@
 #include "ros/ros.h"
 #include <std_msgs/Int32.h>
 #include <threemxl/C3mxlROS.h>
+#include <zuros_control/motorMSG.h>
 
 class threemxlController
 {
 public:
 	threemxlController(ros::NodeHandle nh);
 	void init();
-	void spin();
-	void receiveCallback(const std_msgs::Int32::ConstPtr& msg);
+	void receiveCallback(const zuros_control::motorMSG::ConstPtr& msg);
 
 protected:
-	ros::NodeHandle node_;
-	ros::Subscriber string_subscriber_;
-	CDxlGeneric *motor_;
-	LxSerial serial_port_; ///< Serial port interface
+	ros::NodeHandle _node;
+	ros::Subscriber _subscriber;
+	CDxlGeneric *_motor_left;
+	CDxlGeneric *_motor_right;
+	LxSerial _serial_port; ///< Serial port interface
 };
 
 
