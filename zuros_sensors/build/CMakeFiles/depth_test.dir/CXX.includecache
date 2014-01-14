@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../depth/include/zuros_depth/foek.h
+
+/home/robot/git/zuros/zuros_sensors/depth/foek.cpp
+zuros_depth/foek.h
+-
+
