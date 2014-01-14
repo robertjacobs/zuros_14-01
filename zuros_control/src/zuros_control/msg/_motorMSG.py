@@ -6,17 +6,20 @@ import struct
 
 
 class motorMSG(genpy.Message):
-  _md5sum = "2b842696bf7d178aec69e2f08b9dd853"
+  _md5sum = "a2a9eec3fd2b159cc6afa5290066e5df"
   _type = "zuros_control/motorMSG"
   _has_header = False #flag to mark the presence of a Header object
-  _full_text = """int32 id
-string mode
-int32 accel
-int32 speed
+  _full_text = """#left motor
+int32 left_accel
+int32 left_speed
+
+#right motor
+int32 right_accel
+int32 right_speed
 
 """
-  __slots__ = ['id','mode','accel','speed']
-  _slot_types = ['int32','string','int32','int32']
+  __slots__ = ['left_accel','left_speed','right_accel','right_speed']
+  _slot_types = ['int32','int32','int32','int32']
 
   def __init__(self, *args, **kwds):
     """
@@ -26,7 +29,7 @@ int32 speed
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       id,mode,accel,speed
+       left_accel,left_speed,right_accel,right_speed
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -35,19 +38,19 @@ int32 speed
     if args or kwds:
       super(motorMSG, self).__init__(*args, **kwds)
       #message fields cannot be None, assign default values for those that are
-      if self.id is None:
-        self.id = 0
-      if self.mode is None:
-        self.mode = ''
-      if self.accel is None:
-        self.accel = 0
-      if self.speed is None:
-        self.speed = 0
+      if self.left_accel is None:
+        self.left_accel = 0
+      if self.left_speed is None:
+        self.left_speed = 0
+      if self.right_accel is None:
+        self.right_accel = 0
+      if self.right_speed is None:
+        self.right_speed = 0
     else:
-      self.id = 0
-      self.mode = ''
-      self.accel = 0
-      self.speed = 0
+      self.left_accel = 0
+      self.left_speed = 0
+      self.right_accel = 0
+      self.right_speed = 0
 
   def _get_types(self):
     """
@@ -61,15 +64,8 @@ int32 speed
     :param buff: buffer, ``StringIO``
     """
     try:
-      buff.write(_struct_i.pack(self.id))
-      _x = self.mode
-      length = len(_x)
-      if python3 or type(_x) == unicode:
-        _x = _x.encode('utf-8')
-        length = len(_x)
-      buff.write(struct.pack('<I%ss'%length, length, _x))
       _x = self
-      buff.write(_struct_2i.pack(_x.accel, _x.speed))
+      buff.write(_struct_4i.pack(_x.left_accel, _x.left_speed, _x.right_accel, _x.right_speed))
     except struct.error as se: self._check_types(se)
     except TypeError as te: self._check_types(te)
 
@@ -80,22 +76,10 @@ int32 speed
     """
     try:
       end = 0
-      start = end
-      end += 4
-      (self.id,) = _struct_i.unpack(str[start:end])
-      start = end
-      end += 4
-      (length,) = _struct_I.unpack(str[start:end])
-      start = end
-      end += length
-      if python3:
-        self.mode = str[start:end].decode('utf-8')
-      else:
-        self.mode = str[start:end]
       _x = self
       start = end
-      end += 8
-      (_x.accel, _x.speed,) = _struct_2i.unpack(str[start:end])
+      end += 16
+      (_x.left_accel, _x.left_speed, _x.right_accel, _x.right_speed,) = _struct_4i.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -108,15 +92,8 @@ int32 speed
     :param numpy: numpy python module
     """
     try:
-      buff.write(_struct_i.pack(self.id))
-      _x = self.mode
-      length = len(_x)
-      if python3 or type(_x) == unicode:
-        _x = _x.encode('utf-8')
-        length = len(_x)
-      buff.write(struct.pack('<I%ss'%length, length, _x))
       _x = self
-      buff.write(_struct_2i.pack(_x.accel, _x.speed))
+      buff.write(_struct_4i.pack(_x.left_accel, _x.left_speed, _x.right_accel, _x.right_speed))
     except struct.error as se: self._check_types(se)
     except TypeError as te: self._check_types(te)
 
@@ -128,26 +105,13 @@ int32 speed
     """
     try:
       end = 0
-      start = end
-      end += 4
-      (self.id,) = _struct_i.unpack(str[start:end])
-      start = end
-      end += 4
-      (length,) = _struct_I.unpack(str[start:end])
-      start = end
-      end += length
-      if python3:
-        self.mode = str[start:end].decode('utf-8')
-      else:
-        self.mode = str[start:end]
       _x = self
       start = end
-      end += 8
-      (_x.accel, _x.speed,) = _struct_2i.unpack(str[start:end])
+      end += 16
+      (_x.left_accel, _x.left_speed, _x.right_accel, _x.right_speed,) = _struct_4i.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = genpy.struct_I
-_struct_i = struct.Struct("<i")
-_struct_2i = struct.Struct("<2i")
+_struct_4i = struct.Struct("<4i")
